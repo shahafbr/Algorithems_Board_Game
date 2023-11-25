@@ -6,8 +6,6 @@ from utilities import load_sprite, load_sound, wrap_position
 # Constants
 DIRECTION_UP = Vector2(0, -1)
 
-
-
 class GameObject:
     def __init__(self, position, sprite, velocity, wraps=True):
         # Object Initialization

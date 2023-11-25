@@ -56,9 +56,6 @@ class Asteroids:
             elif is_key_pressed[pygame.K_DOWN]:
                 self.ship.decelerate()
 
-
-
-
     @property
     def game_objects(self):
         # Consolidate all game objects
