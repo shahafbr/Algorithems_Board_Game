@@ -41,11 +41,12 @@ class Spaceship(GameObject):
     ACCELERATION = 0.25
     BULLET_SPEED = 3
 
-    def __init__(self, position):
+    def __init__(self, position, asteroids_instance):
         # Spaceship initialization
         self.direction = Vector2(DIRECTION_UP)
         self.pew_pew = load_sound("laser")  # Sound effect for shooting
         super().__init__(position, load_sprite("spaceship"), Vector2(0))
+        self.asteroids_instance = asteroids_instance
 
     def rotate(self, clockwise=True):
         # Rotating the spaceship
@@ -59,23 +60,48 @@ class Spaceship(GameObject):
     
     def decelerate(self):
         # Accelerating the spaceship
+        
         self.velocity -= self.direction * self.ACCELERATION
 
     def shoot(self):
         # Shooting a bullet
         velocity = self.direction * self.BULLET_SPEED + self.velocity
         bullet = Bullet(self.position, velocity)
-        from game import bullets
-        bullets.append(bullet)
+        # Assuming Asteroids class has an attribute 'bullets' to store the bullets
+        self.asteroids_instance.bullets.append(bullet)  # Note: This might need adjustment based on game architecture
         self.pew_pew.play()
+    
 
-    def draw(self, surface):
-        # Drawing a rotated spaceship
-        angle = self.direction.angle_to(DIRECTION_UP)
-        rotated_surface = rotozoom(self.sprite, angle, 1.0)
-        rotated_surface_size = Vector2(rotated_surface.get_size())
-        blit_position = self.position - rotated_surface_size * 0.5
-        surface.blit(rotated_surface, blit_position)
+    class Spaceship(GameObject):
+        # Constants for spaceship behavior
+        ROTATION_SPEED = 3
+        ACCELERATION = 0.25
+        BULLET_SPEED = 3
+
+        bullets = []  # Define the "bullets" list as a class attribute
+
+        def __init__(self, position, asteroids_instance):
+            # Spaceship initialization
+            self.direction = Vector2(DIRECTION_UP)
+            self.pew_pew = load_sound("laser")  # Sound effect for shooting
+            super().__init__(position, load_sprite("spaceship"), Vector2(0))
+            self.asteroids_instance = asteroids_instance
+
+        def shoot(self):
+            # Shooting a bullet
+            velocity = self.direction * self.BULLET_SPEED + self.velocity
+            bullet = Bullet(self.position, velocity)
+            
+            Spaceship.bullets.append(bullet)  # Access the "bullets" list using the class name
+            self.pew_pew.play()
+
+        def draw(self, surface):
+            # Drawing a rotated spaceship
+            angle = self.direction.angle_to(DIRECTION_UP)
+            rotated_surface = rotozoom(self.sprite, angle, 1.0)
+            rotated_surface_size = Vector2(rotated_surface.get_size())
+            blit_position = self.position - rotated_surface_size * 0.5
+            surface.blit(rotated_surface, blit_position)
 
 class Rock(GameObject):
     # Constants for rock behavior

@@ -29,11 +29,14 @@ def load_sound(name):
     filename = Path(__file__).resolve().parent / f"assets/sounds/{name}.wav"
     return Sound(str(filename))  # Load the sound file
 
-def print_text(surface, text, font, color=Color("tomato")):
+def print_text(surface, text, font, color=Color("tomato"), top_right=False):
     # Rendering and Displaying Text
     text_surface = font.render(text, True, color)  # Create a surface with the rendered text
     rect = text_surface.get_rect()  # Get the rectangle area of the text surface
-    rect.center = Vector2(surface.get_size()) / 2  # Center the text
+    if top_right:
+        rect.topright = (surface.get_width() - 10, 10)
+    else:
+        rect.center = Vector2(surface.get_size()) / 2  # Center the text
     surface.blit(text_surface, rect)  # Draw the text surface onto the main surface
 
 def load_font(name, size):

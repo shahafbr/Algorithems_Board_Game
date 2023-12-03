@@ -1,1 +1,2 @@
-# Algorithems_Board_Game
+# BoardGame_ADS
+Board Game Project

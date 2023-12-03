@@ -12,7 +12,7 @@ screen = pygame.display.set_mode((width, height))  # Creates a window with speci
 position = 0  # Initial position for the moving object (circle)
 direction = 1  # Initial direction of movement (1 for right, -1 for left)
 speed = 3  # Speed of the object's movement
-fps = 30  # Frame rate (frames per second)
+fps = 120  # Frame rate (frames per second)
 clock = pygame.time.Clock()  # Clock object to control frame rate
 
 # Main Game Loop
