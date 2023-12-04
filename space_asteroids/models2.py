@@ -1,7 +1,8 @@
+# models.py
 from pygame.math import Vector2
 from pygame.transform import rotozoom
 import random
-from utils import load_sprite, load_sound, wrap_position
+from utils import load_sprite, load_sound, wrap_position, print_text
 
 # Constants
 DIRECTION_UP = Vector2(0, -1)
@@ -30,15 +31,14 @@ class GameObject:
             self.position = move_to
 
     def collides_with(self, other):
-        # add
         # Collision detection using distance and radius
         distance = self.position.distance_to(other.position)
         return distance < self.radius + other.radius
 
 class Spaceship(GameObject):
     # Constants for spaceship behavior
-    ROTATION_SPEED = 3
-    ACCELERATION = 0.25
+    ROTATION_SPEED = 4
+    ACCELERATION = 0.20
     BULLET_SPEED = 3
 
     def __init__(self, position, asteroids_instance):
@@ -59,49 +59,33 @@ class Spaceship(GameObject):
         self.velocity += self.direction * self.ACCELERATION
     
     def decelerate(self):
-        # Accelerating the spaceship
-        
+        # Deceleration logic
         self.velocity -= self.direction * self.ACCELERATION
+        if self.velocity.length() < 0:
+            self.velocity = Vector2(0, 0)
 
     def shoot(self):
         # Shooting a bullet
         velocity = self.direction * self.BULLET_SPEED + self.velocity
         bullet = Bullet(self.position, velocity)
-        # Assuming Asteroids class has an attribute 'bullets' to store the bullets
-        self.asteroids_instance.bullets.append(bullet)  # Note: This might need adjustment based on game architecture
+        self.asteroids_instance.bullets.append(bullet)
         self.pew_pew.play()
-    
 
-    class Spaceship(GameObject):
-        # Constants for spaceship behavior
-        ROTATION_SPEED = 3
-        ACCELERATION = 0.25
-        BULLET_SPEED = 3
-
-        bullets = []  # Define the "bullets" list as a class attribute
-
-        def __init__(self, position, asteroids_instance):
-            # Spaceship initialization
-            self.direction = Vector2(DIRECTION_UP)
-            self.pew_pew = load_sound("laser")  # Sound effect for shooting
-            super().__init__(position, load_sprite("spaceship"), Vector2(0))
-            self.asteroids_instance = asteroids_instance
-
-        def shoot(self):
-            # Shooting a bullet
-            velocity = self.direction * self.BULLET_SPEED + self.velocity
-            bullet = Bullet(self.position, velocity)
-            
-            Spaceship.bullets.append(bullet)  # Access the "bullets" list using the class name
+        """ 
+        if self.asteroids_instance:
+            bullet_velocity = self.direction * self.BULLET_SPEED + self.velocity
+            bullet = Bullet(self.position, bullet_velocity)
+            self.asteroids_instance.bullets.append(bullet)  # Corrected line to append bullet
             self.pew_pew.play()
+        """
 
-        def draw(self, surface):
-            # Drawing a rotated spaceship
-            angle = self.direction.angle_to(DIRECTION_UP)
-            rotated_surface = rotozoom(self.sprite, angle, 1.0)
-            rotated_surface_size = Vector2(rotated_surface.get_size())
-            blit_position = self.position - rotated_surface_size * 0.5
-            surface.blit(rotated_surface, blit_position)
+    def draw(self, surface):
+        # Drawing a rotated spaceship
+        angle = self.direction.angle_to(DIRECTION_UP)
+        rotated_surface = rotozoom(self.sprite, angle, 1.0)
+        rotated_surface_size = Vector2(rotated_surface.get_size())
+        blit_position = self.position - rotated_surface_size * 0.5
+        surface.blit(rotated_surface, blit_position)
 
 class Rock(GameObject):
     # Constants for rock behavior
@@ -124,8 +108,15 @@ class Rock(GameObject):
     def __init__(self, position, size=3):
         # Rock initialization with varying sizes
         self.size = size
-        scale = {3: 1.0, 2: 0.5, 1: 0.25}[size]  # Scale based on size
+        if size == 3:
+            scale = 1.0
+        elif size == 2:
+            scale = 0.5
+        else:
+            scale = 0.25
+
         sprite = rotozoom(load_sprite("asteroid"), 0, scale)
+        
         # Random velocity
         speed = random.randint(self.MIN_SPEED, self.MAX_SPEED)
         angle = random.randint(0, 360)
@@ -135,7 +126,8 @@ class Rock(GameObject):
     def split(self):
         # Splitting the rock into smaller pieces
         if self.size > 1:
-            from game import rocks
+            from game2 import rocks
+            # Create two smaller rocks
             rocks.append(Rock(self.position, self.size - 1))
             rocks.append(Rock(self.position, self.size - 1))
 
@@ -143,4 +135,3 @@ class Bullet(GameObject):
     def __init__(self, position, velocity):
         # Bullet initialization
         super().__init__(position, load_sprite("bullet"), velocity, False)
-
