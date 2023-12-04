@@ -38,26 +38,34 @@ To set up Space Asteroids, follow these steps:
 
 1. **Clone the repository**:
 
+```bash
 git clone https://github.com/shahafbr/Algorithems_Board_Game.git
+```
 
 2. **Navigate to the game directory**:
 
+```bash
 cd Algorithems_Board_Game/space_asteroids
+```
 
 3. **Install Dependencies**:
 
+```bash
 pip install -r requirements.txt
-
+```
 
 ## 🚀 How to Play
 To start the game, run the following command in the game directory:
 
+```bash
 python main.py
+```
 
 Enjoy navigating your spaceship through the asteroid field and aim for a high score!
 
 ## 📁 Project Structure
 
+``` css
 space_asteroids/
 ├── assets/
 │ ├── sounds/
@@ -68,6 +76,7 @@ space_asteroids/
 ├── models2.py
 ├── startPage.py
 └── utils.py
+```
 
 
 ## 👥 Contributing
