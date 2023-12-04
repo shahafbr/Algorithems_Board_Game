@@ -139,10 +139,3 @@ class Start_Screen:
         else:
             self.user_name += event.unicode
 
-# Example usage
-"""
-if __name__ == "__main__":
-    start_screen = Start_Screen()
-    username = start_screen.run()
-    print("Username entered:", username)
-"""

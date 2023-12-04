@@ -3,12 +3,11 @@
 import pygame
 import random
 
-# initialize and setup using pygame
-pygame.init() # Initializes Pygame modules, essential for any Pygame application
+# Initializes and sets up using pygame
+pygame.init() # Initializes Pygame modules
 pygame.display.set_caption("Test Try") 
 
-""" 
-
+"""
 # Creates a window of size 900x600 pixels 
 # This is essentially setting up a 2D array (or matrix) 
 # where each element represents a pixel on the screen.
