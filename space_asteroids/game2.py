@@ -43,8 +43,8 @@ class Asteroids:
             if self.message == "You won!" or self.message == "You lost!":
                 print(f"Username: {self.username}, Score: {score}")
                 break  # Exit the main game loop
+        return score
             
-
     def handles_input(self):
         # Process user inputs
         for event in pygame.event.get():
@@ -105,6 +105,7 @@ class Asteroids:
 
         if not rocks and self.ship:
             self.message = "You won!"
+    
 
     def draw(self):
         self.screen.blit(self.background, (0, 0))
@@ -117,3 +118,4 @@ class Asteroids:
 
         pygame.display.flip()
         self.clock.tick(30)
+

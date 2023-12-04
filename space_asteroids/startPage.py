@@ -146,4 +146,3 @@ if __name__ == "__main__":
     username = start_screen.run()
     print("Username entered:", username)
 """
-

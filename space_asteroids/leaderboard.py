@@ -1,17 +1,19 @@
 import pygame
 
 class Leaderboard:
-    def __init__(self, font, screen, background_image_path):
+    def __init__(self):
+        pygame.init()
         self.scores = []  # List to hold scores in the format [(name, score), ...]
-        self.font = font  # Pygame font object for rendering text
-        self.screen = screen  # Pygame screen object to draw the leaderboard
-        self.background = pygame.image.load(background_image_path)  # Load the background image
-        self.title_font = pygame.font.Font(None, 48)  # Larger font for the title
-
+        self.font = pygame.font.Font(None, 36)  
+        self.title_font = 'space_asteroids/assets/sprites/font.ttf'  
+        self.screen = pygame.display.set_mode((800, 600))
+        self.background = pygame.image.load('space_asteroids/assets/sprites/Leaderboard.png')  # Load the background image
+        self.new_score = ("", 0)
     def add_score(self, name, score):
         self.scores.append((name, score))
         self.sort_by_score()
-
+    
+    # Merge sort
     def sort_by_score(self):
         self.scores.sort(key=lambda x: x[1], reverse=True)
         self.scores = self.scores[:10]
@@ -24,12 +26,11 @@ class Leaderboard:
         self.screen.blit(self.background, (0, 0))
 
         # Load a custom TTF font for the title
-        title_font_path = 'space_asteroids/assets/sprites/font.ttf'  # Replace with your font file path
-        custom_title_font = pygame.font.Font(title_font_path, 48)
+        custom_title_font = pygame.font.Font(self.title_font, 48)
 
         # Display the title (centered at the top)
         title_surface = custom_title_font.render("Leader Board", True, (255, 255, 255))
-        title_rect = title_surface.get_rect(center=(self.screen.get_width() // 2, 100))  # Adjust y to place the title accordingly
+        title_rect = title_surface.get_rect(center=(self.screen.get_width() // 2, 50))  # Adjust y to place the title accordingly
         self.screen.blit(title_surface, title_rect)
 
         # Calculate the starting y position of the list so it's centered vertically
@@ -46,7 +47,6 @@ class Leaderboard:
             # Blit the score text (centered on the screen)
             self.screen.blit(score_text, text_rect)
 
-
     # Button interaction methods to be implemented
     def draw_button(self, text, x, y, width, height):
         """Draw a button and return its rect for click detection."""
@@ -62,53 +62,75 @@ class Leaderboard:
         if button_rect.collidepoint(mouse_pos):
             return True
         return False
+    def read_scores_from_file(self, filename):
+        scores = []
+        with open(filename, 'r') as file:
+            for line in file:
+                name, score = line.strip().split(',')
+                scores.append((name, int(score)))
+        return scores
 
-# Initialize Pygame and create a screen
-# Initialize Pygame and create a screen
-pygame.init()
-screen = pygame.display.set_mode((800, 600))
-pygame.display.set_caption("Leaderboard")
-font = pygame.font.Font(None, 36)
+    def write_scores_to_file(self, filename, scores):
+        with open(filename, 'w') as file:
+            for name, score in scores:
+                file.write(f"{name},{score}\n")
 
-# Create a Leaderboard instance
-# Replace 'path_to_background_image.jpg' with the actual path to your background image
-leaderboard = Leaderboard(font, screen, 'space_asteroids/assets/sprites/Leaderboard.png')
+    def run_leaderb(self, new_score):
+        screen = pygame.display.set_mode((800, 600))
+        pygame.display.set_caption("Leaderboard")
+        
+        # Create a Leaderboard instance
+        # Replace 'path_to_background_image.jpg' with the actual path to your background image
+        leaderboard = Leaderboard()
 
-# Example scores
-scores = [("Alice", 100), ("Bob", 200), ("Charlie", 150)]
-for name, score in scores:
-    leaderboard.add_score(name, score)
+        # Example scores
+        scores = leaderboard.read_scores_from_file("Score_storing.txt")
+        print(scores)
+        scores.append(new_score)
+        scores.sort(key=lambda x: x[1], reverse=True)  # Assuming the score is the second element of the tuple
 
-# Define button dimensions and positions
-button_width, button_height = 150, 50
-alpha_button_rect = pygame.Rect(100, 550, button_width, button_height)
-score_button_rect = pygame.Rect(550, 550, button_width, button_height)
+        # Keep only the top 10 scores
+        scores = scores[:10]
+        for name, score in scores:
+            leaderboard.add_score(name, score)
 
-# Game loop
-running = True
-while running:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False
-        elif event.type == pygame.MOUSEBUTTONDOWN:
-            # Check if either button is clicked
-            if leaderboard.handle_button_click(alpha_button_rect, event.pos):
-                leaderboard.sort_alphabetically()
-            elif leaderboard.handle_button_click(score_button_rect, event.pos):
-                leaderboard.sort_by_score()
+        # Define button dimensions and positions
+        button_width, button_height = 150, 50
+        alpha_button_rect = pygame.Rect(100, 550, button_width, button_height)
+        score_button_rect = pygame.Rect(550, 550, button_width, button_height)
 
-    # Clear screen
-    screen.fill((0, 0, 0))
+        # Game loop
+        running = True
+        while running:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    running = False
+                elif event.type == pygame.MOUSEBUTTONDOWN:
+                    # Check if either button is clicked
+                    if leaderboard.handle_button_click(alpha_button_rect, event.pos):
+                        leaderboard.sort_alphabetically()
+                    elif leaderboard.handle_button_click(score_button_rect, event.pos):
+                        leaderboard.sort_by_score()
 
-    # Display leaderboard
-    leaderboard.display(100, 50)
+            # Clear screen
+            screen.fill((0, 0, 0))
 
-    # Draw buttons
-    button_width, button_height = 150, 50
-    alpha_button_rect = leaderboard.draw_button("Alphabet", 100, 550, button_width, button_height)
-    score_button_rect = leaderboard.draw_button("Score", 550, 550, button_width, button_height)
+            # Display leaderboard
+            leaderboard.display(100, 50)
 
-    # Update display
-    pygame.display.flip()
+            # Draw buttons
+            button_width, button_height = 150, 50
+            alpha_button_rect = leaderboard.draw_button("Alphabet", 100, 550, button_width, button_height)
+            score_button_rect = leaderboard.draw_button("Score", 550, 550, button_width, button_height)
 
-pygame.quit()
+            # Update display
+            pygame.display.flip()
+            updated_scores = scores[:10]
+            self.write_scores_to_file("Score_storing.txt", updated_scores)
+          
+
+if __name__ == "__main__":
+    leaderboard = Leaderboard()
+    leaderboard.run_leaderb(("Rapi", 100))
+    pygame.quit()
+

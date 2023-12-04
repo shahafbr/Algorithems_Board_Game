@@ -1,17 +1,23 @@
+import pygame
 from game2 import Asteroids
 from startPage import Start_Screen
+from leaderBoard import Leaderboard
 
 
 if __name__ == "__main__":
-    """ 
-    Start_Screen()
-    space_asteroids = Asteroids()
-    space_asteroids.main_loop()  # Start the main game loop after the start screen
-    """
 
     start_screen = Start_Screen()
     username = start_screen.run()  # Capture the returned username
-    print("Username entered:", username)
     space_asteroids = Asteroids(username)  # Pass the username to the game class
-    space_asteroids.main_loop()  # Start the main game loop
-  
+    score = space_asteroids.main_loop()  # Start the main game loop
+    leaderboard = Leaderboard()
+    leaderboard.run_leaderb((username,score))
+    pygame.quit()
+
+
+# instead of doing it in tuples, 
+# let’s make it this format, 
+# because this dictionary form 
+# we can then store all the users in a 
+# 2d array and then printout 
+# all the user detaiuls to the leaderboard page
