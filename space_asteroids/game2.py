@@ -45,7 +45,7 @@ class Asteroids:
              
             if self.message == "You won!" or self.message == "You lost!":
                 print(f"Username: {self.username}, Score: {score}")
-                time.sleep(3)
+                time.sleep(1)
                 break  # Exit the main game loop
             
         return score
