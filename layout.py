@@ -33,5 +33,3 @@ while True:
 
     # Display Update
     pygame.display.flip()  # Updates the entire screen to reflect the new drawings
-
-    
