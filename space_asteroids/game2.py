@@ -2,6 +2,8 @@ import pygame
 from models2 import Rock, Spaceship, Bullet
 from utils import load_sprite, print_text
 from startPage import Start_Screen
+import time
+
 
 # Global lists to hold bullets and rocks
 rocks = []
@@ -40,9 +42,12 @@ class Asteroids:
             self.game_logic()
             self.draw()
             
+             
             if self.message == "You won!" or self.message == "You lost!":
                 print(f"Username: {self.username}, Score: {score}")
+                time.sleep(3)
                 break  # Exit the main game loop
+            
         return score
             
     def handles_input(self):

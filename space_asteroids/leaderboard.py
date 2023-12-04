@@ -62,6 +62,7 @@ class Leaderboard:
         if button_rect.collidepoint(mouse_pos):
             return True
         return False
+    
     def read_scores_from_file(self, filename):
         scores = []
         with open(filename, 'r') as file:
@@ -101,6 +102,7 @@ class Leaderboard:
 
         # Game loop
         running = True
+        
         while running:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -128,9 +130,9 @@ class Leaderboard:
             updated_scores = scores[:10]
             self.write_scores_to_file("Score_storing.txt", updated_scores)
           
-
+"""
 if __name__ == "__main__":
     leaderboard = Leaderboard()
     leaderboard.run_leaderb(("Rapi", 100))
     pygame.quit()
-
+"""
