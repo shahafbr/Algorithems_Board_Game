@@ -5,7 +5,7 @@ import random
 
 # initialize and setup using pygame
 pygame.init() # Initializes Pygame modules, essential for any Pygame application
-pygame.display.set_caption("Test Try") # Sets the window title to "Brown"
+pygame.display.set_caption("Test Try") 
 
 """ 
 

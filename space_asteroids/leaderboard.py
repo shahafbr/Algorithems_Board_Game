@@ -9,6 +9,7 @@ class Leaderboard:
         self.screen = pygame.display.set_mode((800, 600))
         self.background = pygame.image.load('space_asteroids/assets/sprites/Leaderboard.png')  # Load the background image
         self.new_score = ("", 0)
+    
     def add_score(self, name, score):
         self.scores.append((name, score))
         self.sort_by_score()

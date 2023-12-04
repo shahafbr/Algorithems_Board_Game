@@ -13,11 +13,4 @@ if __name__ == "__main__":
     leaderboard = Leaderboard()
     leaderboard.run_leaderb((username,score))
     pygame.quit()
-
-
-# instead of doing it in tuples, 
-# let’s make it this format, 
-# because this dictionary form 
-# we can then store all the users in a 
-# 2d array and then printout 
-# all the user detaiuls to the leaderboard page
+ 
