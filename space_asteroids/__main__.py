@@ -1,7 +1,7 @@
 import pygame
 from game2 import Asteroids
 from startPage import Start_Screen
-from leaderBoard import Leaderboard
+from leaderboard import Leaderboard
 
 # Main execution block that starts when the program is run.
 if __name__ == "__main__":
