@@ -9,7 +9,7 @@ from pathlib import Path
 
 def load_sprite(name, with_alpha=True):
     # Construct the file path relative to the current file
-    filename = Path(__file__).resolve().parent / f"assets/sprites/{name}.png"
+    filename = Path(__file__).resolve().parent / f"Assets/Sprites/{name}.png"
     sprite = load(str(filename))  # Load the image from the file system
 
     # Image Processing
@@ -26,7 +26,7 @@ def wrap_position(position, surface):
 
 def load_sound(name):
     # Construct the file path for sound
-    filename = Path(__file__).resolve().parent / f"assets/sounds/{name}.wav"
+    filename = Path(__file__).resolve().parent / f"Assets/Sounds/{name}.wav"
     return Sound(str(filename))  # Load the sound file
 
 def print_text(surface, text, font, color=Color("tomato"), top_right=False):
@@ -41,6 +41,6 @@ def print_text(surface, text, font, color=Color("tomato"), top_right=False):
 
 def load_font(name, size):
     # Constructs the file path for the font
-    filename = Path(__file__).resolve().parent / f"assets/sprites/{name}.ttf"
+    filename = Path(__file__).resolve().parent / f"Assets/Sprites/{name}.ttf"
     return pygame.font.Font(str(filename), size)  # Loads the font file with the specified size
 

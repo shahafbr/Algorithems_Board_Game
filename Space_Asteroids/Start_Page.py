@@ -9,7 +9,7 @@ class Start_Screen:
         pygame.display.set_caption('Space Game')
 
         # Load and scale the background image
-        self.background_image = pygame.image.load("space_asteroids/assets/sprites/background.png")
+        self.background_image = pygame.image.load('Space_Asteroids/Assets/Sprites/Space.png')
         self.background_image = pygame.transform.scale(self.background_image, (800, 600))
 
         # Setup title, button, and text box properties
@@ -19,7 +19,7 @@ class Start_Screen:
         # Initialize colors and font properties
         self.WHITE = (255, 255, 255)
         self.TRANSPARENT = (0, 0, 0, 0)
-        self.font_path = "space_asteroids/assets/sprites/font.ttf"
+        self.font_path = "Space_Asteroids/Assets/Sprites/Font.ttf"
         self.font_size = 100
         self.font = pygame.font.Font(self.font_path, self.font_size)
         self.warning_font = pygame.font.Font(None, 30)
@@ -139,3 +139,10 @@ class Start_Screen:
         else:
             self.user_name += event.unicode
 
+# Example usage
+"""
+if __name__ == "__main__":
+    start_screen = Start_Screen()
+    username = start_screen.run()
+    print("Username entered:", username)
+"""
