@@ -2,7 +2,7 @@
 
 # Space Asteroids: A Thrilling Space-Themed Arcade Game 🚀🌌
 
-![Space Asteroids Logo](https://github.com/shahafbr/Algorithems_Board_Game/raw/main/space_asteroids/assets/sprites/space.png)
+![Space Asteroids Logo](https://github.com/shahafbr/Algorithems_Board_Game/raw/main/Space_Asteroids/Assets/Sprites/Space.png)
 
 ## 🌟 Project Overview
 Space Asteroids is an engaging and dynamic arcade game set in the vast expanse of space. Developed by @shahafbr, this project brings thrilling asteroid-dodging action to your screen, challenging players to navigate through perilous space environments.
@@ -45,7 +45,7 @@ git clone https://github.com/shahafbr/Algorithems_Board_Game.git
 2. **Navigate to the game directory**:
 
 ```bash
-cd Algorithems_Board_Game/space_asteroids
+cd Algorithems_Board_Game/Space_Asteroids
 ```
 
 3. **Install Dependencies**:
@@ -66,16 +66,16 @@ Enjoy navigating your spaceship through the asteroid field and aim for a high sc
 ## 📁 Project Structure
 
 ``` css
-space_asteroids/
-├── assets/
-│ ├── sounds/
-│ └── sprites/
-├── main.py
-├── game2.py
-├── leaderboard.py
-├── models2.py
-├── startPage.py
-└── utils.py
+Space_Asteroids/
+├── Assets/
+│ ├── Sounds/
+│ └── Sprites/
+├── Main.py
+├── Game.py
+├── Leaderboard.py
+├── Models.py
+├── Start_Page.py
+└── Utils.py
 ```
 
 
